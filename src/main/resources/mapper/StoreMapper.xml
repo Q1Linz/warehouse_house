@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.q1linz.mapper.StoreMapper">
+
+    <select id="selectStoreCount" resultType="long">
+        select count(*) from store
+        <where>
+            <if test="storeName != null and storeName != ''">
+                and store_name like concat('%', #{storeName}, '%')
+            </if>
+            <if test="storeAddress != null and storeAddress != ''">
+                and store_address like concat('%', #{storeAddress}, '%')
+            </if>
+            <if test="concat != null and concat != ''">
+                and concat like concat('%', #{concat}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%', #{phone}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!--
+      //分页查询仓库的方法
+      public List<Store> selectStorePage(@Param("page") Page page,
+@Param("store") Store store);
+    -->
+    <select id="selectStorePage" resultType="com.q1linz.entity.Store">
+        select * from store
+        <where>
+            <if test="store.storeName != null and store.storeName != ''">
+                and store_name like concat('%', #{store.storeName}, '%')
+            </if>
+            <if test="store.storeAddress != null and store.storeAddress != ''">
+                and store_address like concat('%', #{store.storeAddress}, '%')
+            </if>
+            <if test="store.concat != null and store.concat != ''">
+                and concat like concat('%', #{store.concat}, '%')
+            </if>
+            <if test="store.phone != null and store.phone != ''">
+                and phone like concat('%', #{store.phone}, '%')
+            </if>
+        </where>
+        limit #{page.limitIndex}, #{page.pageSize}
+    </select>
+
+    <resultMap id="BaseResultMap" type="com.q1linz.entity.Store">
+            <id property="storeId" column="store_id" jdbcType="INTEGER"/>
+            <result property="storeName" column="store_name" jdbcType="VARCHAR"/>
+            <result property="storeNum" column="store_num" jdbcType="VARCHAR"/>
+            <result property="storeAddress" column="store_address" jdbcType="VARCHAR"/>
+            <result property="concat" column="concat" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        store_id,store_name,store_num,
+        store_address,concat,phone
+    </sql>
+</mapper>

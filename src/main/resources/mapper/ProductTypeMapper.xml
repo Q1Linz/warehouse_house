@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.q1linz.mapper.ProductTypeMapper">
+
+    <delete id="deleteProductType">
+        delete from product_type where type_id = #{typeId} or parent_id = #{typeId}
+    </delete>
+
+    <resultMap id="BaseResultMap" type="com.q1linz.entity.ProductType">
+            <id property="typeId" column="type_id" jdbcType="INTEGER"/>
+            <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+            <result property="typeCode" column="type_code" jdbcType="VARCHAR"/>
+            <result property="typeName" column="type_name" jdbcType="VARCHAR"/>
+            <result property="typeDesc" column="type_desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        type_id,parent_id,type_code,
+        type_name,type_desc
+    </sql>
+</mapper>
