@@ -2,6 +2,7 @@ package com.q1linz.mapper;
 
 import com.q1linz.entity.ProductType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Qilin_
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-01-31 14:05:20
 * @Entity com.q1linz.entity.ProductType
 */
+@Mapper
 public interface ProductTypeMapper extends BaseMapper<ProductType> {
     int deleteProductType(Integer typeId);
 }

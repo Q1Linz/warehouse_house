@@ -62,12 +62,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+<!--        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.6</version>
+        </dependency>-->
         <!--mybatis的依赖-->
-        <dependency>
+<!--        <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.4</version>
-        </dependency>
+        </dependency>-->
         <!--mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -146,7 +151,7 @@
             <version>3.5.2</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>5.3.2</version>
@@ -156,7 +161,16 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.4.6</version>
+        </dependency>-->
+
+
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>3.0.0</version>
         </dependency>
+
 
     </dependencies>
 

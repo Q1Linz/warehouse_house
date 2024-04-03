@@ -1,5 +1,6 @@
 package com.q1linz.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.q1linz.entity.BuyList;
@@ -49,6 +50,24 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         return typeTreeList;
     }
 
+    //将查询到的所有商品分类List<ProductType>转成商品分类树List<ProductType>的算法
+    private List<ProductType> allTypeToTypeTree(List<ProductType> allTypeList, Integer parentId){
+
+        List<ProductType> typeList = new ArrayList<>();
+        for (ProductType productType : allTypeList) {
+            if(productType.getParentId().equals(parentId)){
+                typeList.add(productType);
+            }
+        }
+
+        for (ProductType productType : typeList) {
+            List<ProductType> childTypeList = allTypeToTypeTree(allTypeList, productType.getTypeId());
+            productType.setChildProductCategory(childTypeList);
+        }
+
+        return typeList;
+    }
+
     @Override
     public Result queryTypeByCode(String typeCode) {
 
@@ -60,6 +79,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
 
     @CacheEvict(key = "'all:typeTree'")
     @Override
+    @DS("master")
     public Result saveProductType(ProductType productType) {
 
         ProductTypeWrapper.eq(ProductType::getTypeName,productType.getTypeName());
@@ -76,6 +96,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
 
     @CacheEvict(key = "'all:typeTree'")
     @Override
+    @DS("master")
     public Result removeProductType(Integer typeId) {
         //根据分类id删除分类及其所有子级分类
 
@@ -96,23 +117,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         return Result.err(Result.CODE_ERR_BUSINESS,"分类修改失败");
     }
 
-    //将查询到的所有商品分类List<ProductType>转成商品分类树List<ProductType>的算法
-    private List<ProductType> allTypeToTypeTree(List<ProductType> allTypeList, Integer parentId){
 
-        List<ProductType> typeList = new ArrayList<>();
-        for (ProductType productType : allTypeList) {
-            if(productType.getParentId().equals(parentId)){
-                typeList.add(productType);
-            }
-        }
-
-        for (ProductType productType : typeList) {
-            List<ProductType> childTypeList = allTypeToTypeTree(allTypeList, productType.getTypeId());
-            productType.setChildProductCategory(childTypeList);
-        }
-
-        return typeList;
-    }
 }
 
 

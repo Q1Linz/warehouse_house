@@ -1,5 +1,6 @@
 package com.q1linz.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.q1linz.entity.BuyList;
 import com.q1linz.entity.Result;
@@ -23,7 +24,7 @@ public class BuyListServiceImpl extends ServiceImpl<BuyListMapper, BuyList> impl
     @Autowired
     private BuyListMapper buyListMapper;
 
-
+    @DS("slave")
     @Override
     public Page queryPurchasePage(Page page, BuyList buyList) {
 

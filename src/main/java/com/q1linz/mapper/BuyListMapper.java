@@ -3,6 +3,7 @@ package com.q1linz.mapper;
 import com.q1linz.entity.BuyList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.q1linz.page.Page;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 * @createDate 2024-01-31 13:15:23
 * @Entity com.q1linz.entity.BuyList
 */
+@Mapper
 public interface BuyListMapper extends BaseMapper<BuyList> {
     //查询采购单总行数的方法
     Long selectPurchaseCount(BuyList purchase);

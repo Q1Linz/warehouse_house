@@ -56,10 +56,10 @@ public class LoginController {
         String text = producer.createText();
         //使用文本生成验证码图片
         BufferedImage image = producer.createImage(text);
+
         //将验证码文本作为键保存到redis
         //得到一个操作器，操作键、值都为字符串类型的键值对的,设置过期时间30分钟
         redisTemplate.opsForValue().set(text,"",60*30, TimeUnit.SECONDS);
-
 
         //把验证码图片响应给前端
         //1、设置响应正文：image/jpeg
@@ -67,7 +67,6 @@ public class LoginController {
         //2、将验证码图片写给前端,先拿到字节输出流
         ServletOutputStream outputStream = null;
         try {
-
              outputStream = response.getOutputStream();
             ImageIO.write(image,"jpg",outputStream);
             //刷新

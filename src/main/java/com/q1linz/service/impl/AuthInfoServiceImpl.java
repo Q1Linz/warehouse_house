@@ -1,6 +1,7 @@
 package com.q1linz.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.q1linz.dto.AssignAuthDto;
 import com.q1linz.entity.AuthInfo;
@@ -32,6 +33,7 @@ public class AuthInfoServiceImpl extends ServiceImpl<AuthInfoMapper, AuthInfo> i
 
         向redis缓存 ---- 键：authTree：userId  值：菜单树List<authInfo>转的json串
      */
+    @DS("slave")
     @Override
     public List<AuthInfo> authTreeByUid(Integer uid) {
         //先从redis缓存中查对应的用户菜单
@@ -52,34 +54,6 @@ public class AuthInfoServiceImpl extends ServiceImpl<AuthInfoMapper, AuthInfo> i
 
         return authTreeList;
     }
-
-    @Override
-    public List<AuthInfo> allAuthTree() {
-        String allAuthTree = (String) redisTemplate.opsForValue().get("authTree:all");
-        if(StringUtils.hasText(allAuthTree)){
-            List<AuthInfo> allAuthTreeList = JSON.parseArray(allAuthTree, AuthInfo.class);
-            return allAuthTreeList;
-        }
-        List<AuthInfo> allAuthList = authInfoMapper.selectList(null);
-        List<AuthInfo> allAuthTreeList = allAuthToAuthTree(allAuthList, 0);
-        redisTemplate.opsForValue().set("authTree:all",JSON.toJSONString(allAuthTreeList));
-
-        return allAuthTreeList;
-    }
-
-    @Override
-    public void assignAuth(AssignAuthDto assignAuthDto) {
-        Integer roleId = assignAuthDto.getRoleId();
-        List<Integer> authIds = assignAuthDto.getAuthIds();
-
-        authInfoMapper.delAuthByRoleId(roleId);
-
-        for (Integer authId : authIds) {
-            authInfoMapper.insertRoleAuth(roleId,authId);
-        }
-
-    }
-
 
     /**
      *
@@ -103,6 +77,40 @@ public class AuthInfoServiceImpl extends ServiceImpl<AuthInfoMapper, AuthInfo> i
 
         return firstLevelAuthList;
     }
+
+    @DS("slave")
+    @Override
+    public List<AuthInfo> allAuthTree() {
+        String allAuthTree = (String) redisTemplate.opsForValue().get("authTree:all");
+        if(StringUtils.hasText(allAuthTree)){
+            List<AuthInfo> allAuthTreeList = JSON.parseArray(allAuthTree, AuthInfo.class);
+            return allAuthTreeList;
+        }
+        List<AuthInfo> allAuthList = authInfoMapper.selectList(null);
+        List<AuthInfo> allAuthTreeList = allAuthToAuthTree(allAuthList, 0);
+        redisTemplate.opsForValue().set("authTree:all",JSON.toJSONString(allAuthTreeList));
+
+        return allAuthTreeList;
+    }
+
+
+
+
+    @Override
+    public void assignAuth(AssignAuthDto assignAuthDto) {
+        Integer roleId = assignAuthDto.getRoleId();
+        List<Integer> authIds = assignAuthDto.getAuthIds();
+
+        authInfoMapper.delAuthByRoleId(roleId);
+
+        for (Integer authId : authIds) {
+            authInfoMapper.insertRoleAuth(roleId,authId);
+        }
+
+    }
+
+
+
 
 
 }

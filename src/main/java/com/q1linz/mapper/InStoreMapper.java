@@ -3,6 +3,7 @@ package com.q1linz.mapper;
 import com.q1linz.entity.InStore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.q1linz.page.Page;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.awt.print.PrinterGraphics;
@@ -14,6 +15,7 @@ import java.util.List;
 * @createDate 2024-01-31 15:26:13
 * @Entity com.q1linz.entity.InStore
 */
+@Mapper
 public interface InStoreMapper extends BaseMapper<InStore> {
     //查询入库单总行数的方法
     Long selectInStoreCount(InStore inStore);

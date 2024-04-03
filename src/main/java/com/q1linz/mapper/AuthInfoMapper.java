@@ -1,7 +1,9 @@
 package com.q1linz.mapper;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.q1linz.entity.AuthInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,7 +13,11 @@ import java.util.List;
 * @createDate 2024-01-23 14:24:55
 * @Entity com.q1linz.entity.AuthInfo
 */
+
+@Mapper
 public interface AuthInfoMapper extends BaseMapper<AuthInfo> {
+
+
 
     //根据id查询用户的所有权限菜单
     public List<AuthInfo> findAuthByUid(Integer userId);

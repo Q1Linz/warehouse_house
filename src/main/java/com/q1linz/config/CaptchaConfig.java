@@ -45,11 +45,8 @@ public class CaptchaConfig {
         properties.setProperty("kaptcha.textproducer.font.names", "Arial,Courier");
         //验证码噪点颜色 默认为Color.BLACK
         properties.setProperty("kaptcha.noise.color", "gray");
-
         Config config = new Config(properties);
-
         defaultKaptcha.setConfig(config);
-
         return defaultKaptcha;
     }
 }

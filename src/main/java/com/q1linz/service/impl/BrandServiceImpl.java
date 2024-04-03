@@ -1,5 +1,6 @@
 package com.q1linz.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.q1linz.entity.Brand;
 import com.q1linz.service.BrandService;
@@ -23,6 +24,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     @Autowired
     private BrandMapper brandMapper;
     @Override
+    @DS("slave")
     @Cacheable(key = "'all:brand'")
     public List<Brand> queryAllBrand() {
         List<Brand> brandList = brandMapper.selectList(null);
