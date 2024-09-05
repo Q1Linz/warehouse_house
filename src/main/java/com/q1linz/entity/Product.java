@@ -68,11 +68,11 @@ public class Product {
     private Double memPrice;//商品会员价
 
     @TableField(fill = FieldFill.INSERT)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;//商品的创建时间
 
     @TableField(fill = FieldFill.UPDATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;//商品的修改时间
 
     private Integer createBy;//创建商品的用户id
@@ -81,10 +81,10 @@ public class Product {
 
     private String imgs;//商品的图片地址
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date productDate;//商品的生产日期
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date suppDate;//商品的保质期
 
     @TableField(exist = false)

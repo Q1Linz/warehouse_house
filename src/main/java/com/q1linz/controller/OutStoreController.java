@@ -1,10 +1,7 @@
 package com.q1linz.controller;
 
 
-import com.q1linz.entity.CurrentUser;
-import com.q1linz.entity.OutStore;
-import com.q1linz.entity.Result;
-import com.q1linz.entity.Store;
+import com.q1linz.entity.*;
 import com.q1linz.page.Page;
 import com.q1linz.service.OutStoreService;
 import com.q1linz.service.StoreService;
@@ -67,6 +64,20 @@ public class OutStoreController {
         Result result = outStoreService.confirmOutStore(outStore);
         //响应
         return result;
+    }
+
+    @RequestMapping("/exportTable")
+    public Result exportTable(Long pageNum,Long pageSize, OutStore outStore){
+
+        Page page = new Page();
+        page.setPageNum(pageNum);
+        page.setPageSize(pageSize);
+        //分页查询仓库
+        Page outStorePage = outStoreService.outStorePage(page, outStore);
+        //拿到当前页数据
+        List<?> resultList = outStorePage.getResultList();
+        //响应
+        return Result.ok(resultList);
     }
 
 }

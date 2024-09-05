@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -23,7 +24,7 @@ import javax.annotation.security.DenyAll;
 @TableName("auth_info")
 public class AuthInfo implements Serializable {
 
-    @TableId("auth_id")
+    @TableId(value = "auth_id",type = IdType.AUTO)
     private Integer authId;
 
     private Integer parentId;

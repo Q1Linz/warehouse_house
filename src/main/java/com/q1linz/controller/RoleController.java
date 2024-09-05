@@ -6,6 +6,8 @@ import com.q1linz.dto.AssignRoleDto;
 import com.q1linz.entity.CurrentUser;
 import com.q1linz.entity.Result;
 import com.q1linz.entity.Role;
+import com.q1linz.entity.User;
+import com.q1linz.mapper.RoleMapper;
 import com.q1linz.service.AuthInfoService;
 import com.q1linz.service.RoleService;
 import com.q1linz.utils.TokenUtils;
@@ -145,18 +147,31 @@ public class RoleController {
     @RequestMapping("/role-update")
     public Result updateRole(@RequestBody Role role,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+
+        Role role1 = roleService.queryRoleByRoleId(role.getRoleId());
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id -- 修改角色的用户id
         int updateBy = currentUser.getUserId();
 
         role.setUpdateBy(updateBy);
+        role.setCreateBy(role1.getCreateBy());
 
         //执行业务
         Result result = roleService.updateRoleDesc(role);
 
         //响应
         return result;
+    }
+
+    @RequestMapping("/exportTable")
+    public Result exportTable(Integer pageNum,Integer pageSize, Role role){
+        //分页查询仓库
+        Page<Role> userByPage = roleService.queryRolePage(pageNum, pageSize, role);
+        //拿到当前页数据
+        List<?> resultList = userByPage.getRecords();
+        //响应
+        return Result.ok(resultList);
     }
 
 

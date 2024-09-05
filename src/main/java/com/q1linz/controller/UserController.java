@@ -2,19 +2,13 @@ package com.q1linz.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.q1linz.dto.AssignRoleDto;
-import com.q1linz.entity.CurrentUser;
-import com.q1linz.entity.Result;
-import com.q1linz.entity.Role;
-import com.q1linz.entity.User;
-
-import com.q1linz.mapper.UserMapper;
+import com.q1linz.entity.*;
 import com.q1linz.service.RoleService;
 import com.q1linz.service.UserService;
 import com.q1linz.utils.TokenUtils;
 import com.q1linz.utils.WarehouseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("/user")
@@ -119,6 +113,7 @@ public class UserController {
 
         user.setUpdateBy(updateBy);
 
+
         //执行业务
         Result result = userService.updateUserName(user);
 
@@ -139,5 +134,14 @@ public class UserController {
     }
 
 
+    @RequestMapping("/exportTable")
+    public Result exportTable(Integer pageNum,Integer pageSize, User user){
+        //分页查询仓库
+        Page<User> userByPage = userService.findUserByPage(pageNum, pageSize, user);
+        //拿到当前页数据
+        List<?> resultList = userByPage.getRecords();
+        //响应
+        return Result.ok(resultList);
+    }
 
 }

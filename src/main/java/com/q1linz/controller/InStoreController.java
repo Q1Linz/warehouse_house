@@ -1,9 +1,7 @@
 package com.q1linz.controller;
 
-import com.q1linz.entity.InStore;
-import com.q1linz.entity.Result;
+import com.q1linz.entity.*;
 
-import com.q1linz.entity.Store;
 import com.q1linz.page.Page;
 import com.q1linz.service.InStoreService;
 import com.q1linz.service.StoreService;
@@ -49,6 +47,22 @@ public class InStoreController {
         Result result = inStoreService.confirmInStore(inStore);
         //响应
         return result;
+    }
+
+
+
+    @RequestMapping("/exportTable")
+    public Result exportTable(Long pageNum,Long pageSize, InStore inStore){
+
+        Page page = new Page();
+        page.setPageNum(pageNum);
+        page.setPageSize(pageSize);
+        //分页查询仓库
+        Page inStorePage = inStoreService.queryInStorePage(page, inStore);
+        //拿到当前页数据
+        List<?> resultList = inStorePage.getResultList();
+        //响应
+        return Result.ok(resultList);
     }
 
 }

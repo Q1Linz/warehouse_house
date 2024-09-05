@@ -11,6 +11,8 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
     List<Role> getAllRole();
 
+    Role queryRoleByRoleId(Integer id);
+
     //查询用户已分配的角色的业务方法
     List<Role> queryRolesByUserId(Integer userId);
 
@@ -30,5 +32,7 @@ public interface RoleService extends IService<Role> {
     void deleteRole(Integer roleId);
 
     Result updateRoleDesc(Role role);
+
+
 
 }

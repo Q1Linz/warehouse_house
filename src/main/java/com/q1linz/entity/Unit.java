@@ -2,6 +2,7 @@ package com.q1linz.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class Unit implements Serializable {
     /**
      * 
      */
-    @TableId("unit_id")
+    @TableId(value = "unit_id",type = IdType.AUTO)
     private Integer unitId;
 
     /**

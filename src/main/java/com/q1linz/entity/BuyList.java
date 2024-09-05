@@ -44,7 +44,7 @@ public class BuyList implements Serializable {
      * 
      */
     @TableField(fill = FieldFill.INSERT)
-    @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date buyTime;
 
     /**

@@ -10,10 +10,7 @@ import com.q1linz.utils.WarehouseConstants;
 import org.apache.ibatis.ognl.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -93,7 +90,7 @@ public class LoginController {
      * @param loginUser 接收封装前端的登录用户信息json数据
      * @return
      */
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Result login(@RequestBody LoginUser loginUser){
         //拿到验证码
         String code = loginUser.getVerificationCode();

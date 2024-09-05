@@ -47,7 +47,8 @@ public class ProductController {
 
             File uploadDirPath = uploadDirFile.getAbsoluteFile();
 
-            String fileUploadPath = uploadDirPath+uploadPath+"\\"+file.getOriginalFilename();
+//            String fileUploadPath = uploadDirPath+uploadPath+"\\"+file.getOriginalFilename();
+            String fileUploadPath = uploadPath+File.separator+file.getOriginalFilename();;
 
             file.transferTo(new File(fileUploadPath));
             System.out.println("fileUploadPath = " + fileUploadPath);
@@ -162,6 +163,19 @@ public class ProductController {
         return result;
     }
 
+    @RequestMapping("/exportTable")
+    public Result exportTable(Long pageNum,Long pageSize, Product product){
+
+        Page page = new Page();
+        page.setPageNum(pageNum);
+        page.setPageSize(pageSize);
+        //分页查询仓库
+        Page productPage = productService.queryProductPage(page, product);
+        //拿到当前页数据
+        List<?> resultList = productPage.getResultList();
+        //响应
+        return Result.ok(resultList);
+    }
 
 
 

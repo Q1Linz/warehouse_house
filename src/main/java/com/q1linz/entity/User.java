@@ -1,9 +1,6 @@
 package com.q1linz.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
@@ -17,7 +14,7 @@ import java.util.Date;
 @TableName("user_info")
 public class User {
 
-	@TableId("user_id")
+	@TableId(value = "user_id",type = IdType.AUTO)
 	private Integer userId;//用户id
 
 	private String userCode;//账号

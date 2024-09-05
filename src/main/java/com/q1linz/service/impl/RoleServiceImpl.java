@@ -38,6 +38,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements Rol
     }
 
     @Override
+    public Role queryRoleByRoleId(Integer id) {
+        return roleMapper.selectById(id);
+    }
+
+    @Override
     public List<Role> queryRolesByUserId(Integer userId) {
         List<Role> roles = roleMapper.findRolesByUserId(userId);
         return roles;
@@ -54,8 +59,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements Rol
 
         //根据用户id删除给用户已分配的所有角色
         roleMapper.delRoleByUserId(userId);
-
-
 
         //循环添加用户角色关系
         for (String roleId : roleIdList) {

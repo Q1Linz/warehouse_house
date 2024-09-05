@@ -7,10 +7,12 @@ import com.q1linz.entity.Store;
 import com.q1linz.page.Page;
 import com.q1linz.service.BuyListService;
 import com.q1linz.mapper.BuyListMapper;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +47,7 @@ public class BuyListServiceImpl extends ServiceImpl<BuyListMapper, BuyList> impl
     @Override
     public Result saveBuyList(BuyList buyList) {
         buyList.setIsIn("0");
+        buyList.setBuyTime(new Date());
         int i = buyListMapper.insert(buyList);
         if(i > 0){
             return Result.ok("添加采购单成功");
